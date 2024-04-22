@@ -1,8 +1,8 @@
 ﻿namespace Catalog.API.Exception
 {
-    public class ProductNotFoundException : FormatException
+    public class ProductNotFoundException : NotFoundException
     {
-        public ProductNotFoundException():base("Product Not Found!")
+        public ProductNotFoundException(Guid Id):base("Product",Id)
         {
             
         }

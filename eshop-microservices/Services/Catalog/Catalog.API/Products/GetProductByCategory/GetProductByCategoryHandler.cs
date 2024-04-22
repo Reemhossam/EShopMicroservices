@@ -7,13 +7,12 @@ namespace Catalog.API.Products.GetProductByCategory
 {
     record GetProductByCategoryQuery(string Category):IQuery<GetProductByCategoryResult>;
     record GetProductByCategoryResult(IEnumerable<Product> Products);
-    internal class GetProductByCategoryQueryHandler(AppDbContext _db, ILogger<GetProductByCategoryQuery> logger) : IQueryHandler<GetProductByCategoryQuery, GetProductByCategoryResult>
+    internal class GetProductByCategoryQueryHandler(AppDbContext _db) : IQueryHandler<GetProductByCategoryQuery, GetProductByCategoryResult>
     {
         public async Task<GetProductByCategoryResult> Handle(GetProductByCategoryQuery query, CancellationToken cancellationToken)
         {
-            logger.LogInformation("GetProductByCategoryHandler.Handle called with{@Query}", query);
-            IEnumerable<Product> products = await _db.Products.Where(p => 
-                        p.Category.Contains(query.Category)).ToListAsync(cancellationToken);
+            IEnumerable<Product> products = _db.Products.Where(p => 
+                        p.Category==query.Category).ToList();
 
             return new GetProductByCategoryResult(products);
         }

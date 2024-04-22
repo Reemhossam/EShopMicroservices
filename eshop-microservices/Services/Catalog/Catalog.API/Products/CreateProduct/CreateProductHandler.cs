@@ -3,13 +3,13 @@ using FluentValidation;
 
 namespace Catalog.API.Products.CreateProduct
 {
-    public record CreateProductCommand(string Name, List<string> Category, string Description, string ImageFile, decimal Price)
+    public record CreateProductCommand(string Name, string Category, string Description, string ImageFile, decimal Price)
         :ICommand<CreateProductResult>;
     public record CreateProductResult(Guid Id);
 
-    public class CreateProductRequestValidator : AbstractValidator<CreateProductCommand>
+    public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
     {
-        public CreateProductRequestValidator()
+        public CreateProductCommandValidator()
         {
             RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
             RuleFor(x => x.Category).NotEmpty().WithMessage("Category is required");
@@ -17,17 +17,11 @@ namespace Catalog.API.Products.CreateProduct
             RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price must be greater than 0");
         }
     }
-    internal class CreateProductCommandHandler(AppDbContext _db, IValidator<CreateProductCommand> validator) :
+    internal class CreateProductCommandHandler(AppDbContext _db) :
         ICommandHandler<CreateProductCommand, CreateProductResult>
     {
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-            var result = await validator.ValidateAsync(command, cancellationToken);
-            var errors = result.Errors.Select(e=>e.ErrorMessage).ToList();
-            if(errors.Any())
-            {
-                throw new ValidationException(errors.FirstOrDefault());
-            }
             // create command entity from command object
             var product = new Product
             {
