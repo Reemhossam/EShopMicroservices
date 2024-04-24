@@ -1,0 +1,13 @@
+﻿global using Carter;
+global using Basket.API.Data;
+global using Mapster;
+global using MediatR;
+global using Basket.API.Models;
+global using BulidingBlocks.CQRS;
+global using FluentValidation;
+global using Microsoft.EntityFrameworkCore;
+global using BulidingBlocks.Exceptions;
+global using Basket.API.Exceptions;
+global using BulidingBlocks.Behaviors;
+global using System.ComponentModel.DataAnnotations;
+global using System.ComponentModel.DataAnnotations.Schema;

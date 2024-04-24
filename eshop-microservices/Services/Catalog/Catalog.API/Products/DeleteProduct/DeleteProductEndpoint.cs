@@ -14,7 +14,7 @@ namespace Catalog.API.Products.DeleteProduct
                 var response = result.Adapt<DeleteProductResponse>();
                 return Results.Ok(response);
             })
-             .WithName("DeleteProduct")
+            .WithName("DeleteProduct")
             .Produces<DeleteProductResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithSummary("Delete Products")
