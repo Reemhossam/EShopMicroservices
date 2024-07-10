@@ -9,7 +9,7 @@
             var cart = new Cart()
             {
                 ShoppingCart = ShoppingCart,
-                ShoppingCartItem = ShoppingCartItem,
+                ShoppingCartItem = ShoppingCartItem.ToList(),
             };
             if (cart.ShoppingCart == null)
             {

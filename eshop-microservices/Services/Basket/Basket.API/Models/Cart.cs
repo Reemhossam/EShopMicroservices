@@ -3,6 +3,6 @@
     public class Cart
     {
         public ShoppingCart ShoppingCart { get; set; }
-        public IEnumerable<ShoppingCartItem>? ShoppingCartItem { get; set; }
+        public ICollection<ShoppingCartItem>? ShoppingCartItem { get; set; }
     }
 }

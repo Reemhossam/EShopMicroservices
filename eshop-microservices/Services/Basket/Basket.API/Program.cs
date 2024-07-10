@@ -1,8 +1,10 @@
 using BulidingBlocks.Exceptions.Handler;
+using Discount.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //add services to the container.
+//Application services
 var assembly = typeof(Program).Assembly;
 builder.Services.AddMediatR(config =>
 {
@@ -12,10 +14,18 @@ builder.Services.AddMediatR(config =>
 });
 builder.Services.AddValidatorsFromAssembly(assembly);
 builder.Services.AddCarter();
+
+//Data services
 builder.Services.AddScoped<IBasketRepository,BasketRepository>();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+//Grpc services
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+{
+    options.Address= new Uri(builder.Configuration["GrpcSetting:DiscountUrl"]!);
+});
+//Cross Cutting services
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 var app = builder.Build();
