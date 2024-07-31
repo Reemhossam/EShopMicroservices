@@ -1,8 +1,8 @@
-﻿using Discount.Grpc.Data;
+﻿ using Discount.Grpc.Data;
 using Discount.Grpc.Models;
 using Grpc.Core;
 using Mapster;
-using Marten;
+using Microsoft.EntityFrameworkCore;
 
 namespace Discount.Grpc.Services
 {
@@ -24,7 +24,7 @@ namespace Discount.Grpc.Services
         public override async Task<CouponModel> CreateDiscount(CreateDiscountRequest request, ServerCallContext context)
         {
             var coupon = request.Coupon.Adapt<Coupon>();
-            if(coupon == null)
+            if (coupon == null)
               throw new RpcException(new Status(StatusCode.InvalidArgument, "invalid request object."));
             _db.Coupons.Add(coupon);
             await _db.SaveChangesAsync();

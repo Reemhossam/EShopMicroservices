@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BulidingBlocks.CQRS
 {
-    public interface IQueryHandler<in TQuery, TRequest>:IRequestHandler<TQuery, TRequest> 
-        where TQuery:IQuery<TRequest>
-        where TRequest : notnull
+    public interface IQueryHandler<in TQuery, TResponse>:IRequestHandler<TQuery, TResponse> 
+        where TQuery:IQuery<TResponse>
+        where TResponse : notnull
     {
     }
 }

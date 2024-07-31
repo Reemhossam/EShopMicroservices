@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace BulidingBlocks.CQRS
 {
-    public interface ICommandHandler<in TCommand, TRequest>:IRequestHandler<TCommand, TRequest> 
-        where TCommand :ICommand<TRequest> 
-        where TRequest : notnull
+    public interface ICommandHandler<in TCommand, TResponse> :IRequestHandler<TCommand, TResponse> 
+        where TCommand :ICommand<TResponse> 
+        where TResponse : notnull
 
     {
     }
 
-    public interface ICommandHandler<in TCommand> : IRequestHandler<TCommand, Unit>
+    public interface ICommandHandler<in TCommand> : ICommandHandler<TCommand, Unit>
        where TCommand : ICommand<Unit>
 
     {
