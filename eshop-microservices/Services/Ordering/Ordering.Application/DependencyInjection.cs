@@ -9,7 +9,7 @@ namespace Ordering.Application
             //services.AddMediatR(config =>
             //{
             //    config.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
-           // });
+            // });
             return services;
         }
     }
