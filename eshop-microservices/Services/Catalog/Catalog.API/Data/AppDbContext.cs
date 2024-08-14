@@ -1,9 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Polly;
-using System.Xml;
-using static Azure.Core.HttpHeader;
-
-namespace Catalog.API.Data
+﻿namespace Catalog.API.Data
 {
     public class AppDbContext :DbContext
     {

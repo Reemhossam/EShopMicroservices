@@ -1,6 +1,4 @@
-﻿using Ordering.Domain.ValueObjects;
-
-namespace Ordering.Domain.Models
+﻿namespace Ordering.Domain.Models
 {
     public class OrderItem : Entity<OrderItemId>
     {
