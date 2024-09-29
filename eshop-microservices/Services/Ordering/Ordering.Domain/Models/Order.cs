@@ -2,7 +2,7 @@
 {
     public class Order :Aggregate<OrderId>
     {
-        private readonly List<OrderItem> _orderItems = new();
+        private readonly List<OrderItem> _orderItems= new();
         public IReadOnlyList<OrderItem> OrderItems => _orderItems.AsReadOnly();
         public CustomerId CustomerId { get; private set; } = default!;
         public OrderName OrderName { get; private set; } = default!;
@@ -30,7 +30,7 @@
             };
             //add domain event;
             order.AddDomainEvent(new OrderCreatedEvent(order));
-            
+
             return order;
         }
         public void Update(OrderName orderName, Address shippingAddress, Address billingAddress, Payment payment, OrderStatus status)

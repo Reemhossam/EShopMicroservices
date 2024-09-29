@@ -10,7 +10,7 @@
             ArgumentException.ThrowIfNullOrWhiteSpace(name);
             ArgumentException.ThrowIfNullOrWhiteSpace(email);
 
-            Customer customer = new Customer
+            Customer customer = new ()
             {
                 Id = id,
                 Name = name,

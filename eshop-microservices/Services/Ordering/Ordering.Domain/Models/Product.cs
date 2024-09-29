@@ -9,7 +9,7 @@
             ArgumentException.ThrowIfNullOrWhiteSpace(name);
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
 
-            Product product = new Product
+            Product product = new()
             {
                 Id = id,
                 Name = name,
