@@ -32,7 +32,7 @@ namespace Basket.API.Migrations
 
                     b.HasKey("UserName");
 
-                    b.ToTable("ShoppingCarts");
+                    b.ToTable("ShoppingCarts", (string)null);
                 });
 
             modelBuilder.Entity("Basket.API.Models.ShoppingCartItem", b =>
@@ -68,18 +68,23 @@ namespace Basket.API.Migrations
 
                     b.HasIndex("CartUserName");
 
-                    b.ToTable("ShoppingCartItems");
+                    b.ToTable("ShoppingCartItems", (string)null);
                 });
 
             modelBuilder.Entity("Basket.API.Models.ShoppingCartItem", b =>
                 {
-                    b.HasOne("Basket.API.Models.ShoppingCart", "ShoppCartUserName")
-                        .WithMany()
+                    b.HasOne("Basket.API.Models.ShoppingCart", "UserName")
+                        .WithMany("Items")
                         .HasForeignKey("CartUserName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ShoppCartUserName");
+                    b.Navigation("UserName");
+                });
+
+            modelBuilder.Entity("Basket.API.Models.ShoppingCart", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

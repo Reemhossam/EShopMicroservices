@@ -10,7 +10,7 @@
         public string ProductName { get; set; } = default!;
         public string CartUserName { get; set; }
         [ForeignKey("CartUserName")]  //This attribute is optional bc EF should recognize Product obj specifi
-        public virtual ShoppingCart ShoppCartUserName { get; set; }
+        public virtual ShoppingCart UserName { get; set; }
 
     }
 }

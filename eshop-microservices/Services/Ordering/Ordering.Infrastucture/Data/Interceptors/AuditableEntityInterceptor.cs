@@ -28,7 +28,7 @@ namespace Ordering.Infrastucture.Data.Interceptors
                     entry.Entity.CreatedBy = "Reem";
                     entry.Entity.CreatedAt = DateTime.UtcNow;
                 }
-                if (entry.State == EntityState.Modified || entry.State == EntityState.Modified || entry.HasChangedOwnedEntities())
+                if (entry.State == EntityState.Added || entry.State == EntityState.Modified || entry.HasChangedOwnedEntities())
                 {
                     entry.Entity.LastModifiedBy = "Reem";
                     entry.Entity.LastModified = DateTime.UtcNow;

@@ -27,7 +27,7 @@
                 var payment2 = Payment.Of("Ali", "88885555559999", "9/3", "222", 2);
                 var order1 = Order.Create(OrderId.Of(Guid.NewGuid()),
                     CustomerId.Of(new Guid("58c49479-ec65-4de2-86e7-033c546291aa")),
-                    OrderName.Of("Order 1"),
+                    OrderName.Of("Order_1"),
                     shippingAddress: address1,
                     billingAddress: address1,
                     payment1);
@@ -36,7 +36,7 @@
 
                 var order2 = Order.Create(OrderId.Of(Guid.NewGuid()),
                     CustomerId.Of(new Guid("189dc8dc-990f-48e0-a37b-e6f2b60b9d7d")),
-                    OrderName.Of("Order 2"),
+                    OrderName.Of("Order_2"),
                     shippingAddress: address2,
                     billingAddress: address2,
                     payment2

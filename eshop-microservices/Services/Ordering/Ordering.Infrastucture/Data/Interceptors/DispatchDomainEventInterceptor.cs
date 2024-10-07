@@ -24,10 +24,9 @@ namespace Ordering.Infrastucture.Data.Interceptors
                                     .Where(a => a.Entity.DomainEvents.Any())
                                     .Select(a => a.Entity);
             List<IDomainEvent> domainEvents = aggregates.SelectMany(a => a.DomainEvents).ToList();
-            foreach( var entity in aggregates)
-            {
-                entity.ClearDomainEvents();
-            }
+            
+            aggregates.ToList().ForEach(a => a.ClearDomainEvents());
+
             foreach( var domainEvent in  domainEvents) 
             {
                 await mediator.Publish(domainEvent);

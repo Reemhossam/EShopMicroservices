@@ -2,33 +2,23 @@
 {
     public class BasketRepository(AppDbContext _db) : IBasketRepository
     {
-        public async Task<Cart> GetBasket(string userName, CancellationToken cancellationToken = default)
+        public async Task<ShoppingCart> GetBasket(string userName, CancellationToken cancellationToken = default)
         {
-            var ShoppingCart = _db.ShoppingCarts.FirstOrDefault(x => x.UserName == userName);
-            var ShoppingCartItem = _db.ShoppingCartItems.Where(i => i.CartUserName == userName);
-            var cart = new Cart()
-            {
-                ShoppingCart = ShoppingCart,
-                ShoppingCartItem = ShoppingCartItem.ToList(),
-            };
-            if (cart.ShoppingCart == null)
+            var ShoppingCart = _db.ShoppingCarts.Include(i => i.Items).FirstOrDefault(x => x.UserName == userName);
+
+            if (ShoppingCart == null)
             {
                 throw new BasketNotFoundException(userName);
             }
-            return cart;
+            return ShoppingCart;
         }
 
-        public async Task<string> StoreBasket(Cart cart, CancellationToken cancellationToken = default)
+        public async Task<string> StoreBasket(ShoppingCart ShoppingCart, CancellationToken cancellationToken = default)
         {
-            ShoppingCart ShoppingCart = new ShoppingCart
-            {
-                UserName = cart.ShoppingCart.UserName,
-                TotalPrice = cart.ShoppingCart.TotalPrice
-            };
-            if (await _db.ShoppingCarts.AsNoTracking().FirstOrDefaultAsync(e => e.UserName == ShoppingCart.UserName) == null)
+            if (await _db.ShoppingCarts.FirstOrDefaultAsync(e => e.UserName == ShoppingCart.UserName) == null)
             {
                 _db.ShoppingCarts.Add(ShoppingCart);
-                foreach (var item in cart.ShoppingCartItem)
+                foreach (var item in ShoppingCart.Items)
                 {
                     item.CartUserName = ShoppingCart.UserName;
                     _db.ShoppingCartItems.Add(item);
@@ -38,21 +28,22 @@
             {
                 // if ShoppingCart is not null
                 //check if shoppingCartItems in ShoppingCart
-                foreach (var item in cart.ShoppingCartItem)
+                foreach (var item in ShoppingCart.Items)
                 {
-                    if (await _db.ShoppingCartItems.AsNoTracking().FirstOrDefaultAsync(e => e.ProductId == item.ProductId) == null)
+                    if (await _db.ShoppingCartItems.FirstOrDefaultAsync(e => e.ProductId == item.ProductId) == null)
                     {
                         item.CartUserName = ShoppingCart.UserName;
                         _db.ShoppingCartItems.Add(item);
                     }
                     else
                     {
-                        item.Quantity += _db.ShoppingCartItems.AsNoTracking().FirstOrDefault(e => e.ProductId == item.ProductId).Quantity;
+                        item.Quantity += _db.ShoppingCartItems.FirstOrDefault(e => e.ProductId == item.ProductId).Quantity;
                         item.CartUserName = ShoppingCart.UserName;
-                        item.Id = _db.ShoppingCartItems.AsNoTracking().FirstOrDefault(e => e.ProductId == item.ProductId).Id;
+                        item.Id = _db.ShoppingCartItems.FirstOrDefault(e => e.ProductId == item.ProductId).Id;
                         _db.ShoppingCartItems.Update(item);
                     }
                 }
+                
                 _db.ShoppingCarts.Update(ShoppingCart);
             }
 
@@ -63,17 +54,17 @@
 
         public async Task<bool> DeleteBasket(string userName, CancellationToken cancellationToken = default)
         {
-            ShoppingCart cart = _db.ShoppingCarts.FirstOrDefault(p => p.UserName == userName);
+            ShoppingCart ShoppingCart = _db.ShoppingCarts.FirstOrDefault(p => p.UserName == userName);
             IEnumerable<ShoppingCartItem> shoppingCartItems = _db.ShoppingCartItems.Where(u => u.CartUserName == userName);
             foreach (var item in shoppingCartItems)
             {
                 _db.ShoppingCartItems.Remove(item);
             }
-            if (cart == null)
+            if (ShoppingCart == null)
             {
                 //throw new ProductNotFoundException(command.Id);
             }
-            _db.ShoppingCarts.Remove(cart);
+            _db.ShoppingCarts.Remove(ShoppingCart);
             _db.SaveChangesAsync(cancellationToken);
             return true;
         }

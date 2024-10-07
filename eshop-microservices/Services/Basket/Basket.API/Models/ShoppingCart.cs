@@ -5,11 +5,7 @@
         [Key]
         public string UserName { get; set; } = default!;
         public decimal  TotalPrice { get; set; }
-        public ShoppingCart(string userName, decimal totalPrice)
-        {
-            UserName= userName;
-            TotalPrice= totalPrice;
-        }
+        public IList<ShoppingCartItem> Items { get; set; }
         //Required for Mapping
         public ShoppingCart()
         {

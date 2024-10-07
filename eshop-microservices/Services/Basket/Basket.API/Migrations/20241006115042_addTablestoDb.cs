@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Basket.API.Migrations
 {
     /// <inheritdoc />
-    public partial class v2 : Migration
+    public partial class addTablestoDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

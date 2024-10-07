@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Basket.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240423111609_v2")]
-    partial class v2
+    [Migration("20241006115042_addTablestoDb")]
+    partial class addTablestoDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,13 +76,18 @@ namespace Basket.API.Migrations
 
             modelBuilder.Entity("Basket.API.Models.ShoppingCartItem", b =>
                 {
-                    b.HasOne("Basket.API.Models.ShoppingCart", "ShoppCartUserName")
-                        .WithMany()
+                    b.HasOne("Basket.API.Models.ShoppingCart", "UserName")
+                        .WithMany("Items")
                         .HasForeignKey("CartUserName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ShoppCartUserName");
+                    b.Navigation("UserName");
+                });
+
+            modelBuilder.Entity("Basket.API.Models.ShoppingCart", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,7 +2,6 @@
 using Discount.Grpc.Models;
 using Grpc.Core;
 using Mapster;
-using Microsoft.EntityFrameworkCore;
 
 namespace Discount.Grpc.Services
 {
