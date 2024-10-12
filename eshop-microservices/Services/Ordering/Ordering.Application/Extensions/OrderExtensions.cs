@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 namespace Ordering.Application.Extensions
 {
     public static class ProjectToOrderDto
@@ -38,6 +39,46 @@ namespace Ordering.Application.Extensions
                     Status: order.Status,
                     OrderItems: order.OrderItems.Select(oi => new OrderItemDto(OrderId: oi.OrderId.Value, ProductId: oi.ProductId.Value, Quantity: oi.Quantity, Price: oi.Price)).ToList()
                     ));
+        }
+
+        public static OrderDto ToOrderDto(this Order order)
+        {
+            return DtoFromOrder(order);
+        }
+        public static OrderDto DtoFromOrder(Order order) 
+        {
+            return new OrderDto(
+                Id: order.Id.Value,
+                CustomerId: order.CustomerId.Value,
+                OrderName: order.OrderName.Value,
+                ShippingAddress: new AddressDto(
+                    FirstName: order.ShippingAddress.FirstName,
+                    LastName: order.ShippingAddress.LastName,
+                    EmailAddress: order.ShippingAddress.EmailAddress,
+                    AddressLine: order.ShippingAddress.AddressLine,
+                    Country: order.ShippingAddress.Country,
+                    State: order.ShippingAddress.State,
+                    ZipCode: order.ShippingAddress.ZipCode
+                    ),
+                BillingAddress: new AddressDto(
+                    FirstName: order.BillingAddress.FirstName,
+                    LastName: order.BillingAddress.LastName,
+                    EmailAddress: order.BillingAddress.EmailAddress,
+                    AddressLine: order.BillingAddress.AddressLine,
+                    Country: order.BillingAddress.Country,
+                    State: order.BillingAddress.State,
+                    ZipCode: order.BillingAddress.ZipCode
+                    ),
+                Payment: new PaymentDto(
+                    CardName: order.Payment.CardName,
+                    CardNumber: order.Payment.CardNumber,
+                    Expiration: order.Payment.Expiration,
+                    Cvv: order.Payment.CVV,
+                    PaymentMethod: order.Payment.PaymentMethod
+                    ),
+                Status: order.Status,
+                OrderItems: order.OrderItems.Select(oi => new OrderItemDto(OrderId: oi.OrderId.Value, ProductId: oi.ProductId.Value, Quantity: oi.Quantity, Price: oi.Price)).ToList()
+              );
         }
     }
 }

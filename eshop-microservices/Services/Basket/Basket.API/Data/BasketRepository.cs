@@ -20,7 +20,7 @@
                 _db.ShoppingCarts.Add(ShoppingCart);
                 foreach (var item in ShoppingCart.Items)
                 {
-                    item.CartUserName = ShoppingCart.UserName;
+                    item.ShoppingCartUserName = ShoppingCart.UserName;
                     _db.ShoppingCartItems.Add(item);
                 }
             }
@@ -32,13 +32,13 @@
                 {
                     if (await _db.ShoppingCartItems.FirstOrDefaultAsync(e => e.ProductId == item.ProductId) == null)
                     {
-                        item.CartUserName = ShoppingCart.UserName;
+                        item.ShoppingCartUserName = ShoppingCart.UserName;
                         _db.ShoppingCartItems.Add(item);
                     }
                     else
                     {
                         item.Quantity += _db.ShoppingCartItems.FirstOrDefault(e => e.ProductId == item.ProductId).Quantity;
-                        item.CartUserName = ShoppingCart.UserName;
+                        item.ShoppingCartUserName = ShoppingCart.UserName;
                         item.Id = _db.ShoppingCartItems.FirstOrDefault(e => e.ProductId == item.ProductId).Id;
                         _db.ShoppingCartItems.Update(item);
                     }
@@ -55,7 +55,7 @@
         public async Task<bool> DeleteBasket(string userName, CancellationToken cancellationToken = default)
         {
             ShoppingCart ShoppingCart = _db.ShoppingCarts.FirstOrDefault(p => p.UserName == userName);
-            IEnumerable<ShoppingCartItem> shoppingCartItems = _db.ShoppingCartItems.Where(u => u.CartUserName == userName);
+            IEnumerable<ShoppingCartItem> shoppingCartItems = _db.ShoppingCartItems.Where(u => u.ShoppingCartUserName == userName);
             foreach (var item in shoppingCartItems)
             {
                 _db.ShoppingCartItems.Remove(item);

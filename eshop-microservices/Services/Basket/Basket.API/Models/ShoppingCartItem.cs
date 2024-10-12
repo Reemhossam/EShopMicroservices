@@ -8,9 +8,10 @@
         public decimal Price { get; set; } = default!;
         public Guid ProductId { get; set; } = default!;
         public string ProductName { get; set; } = default!;
-        public string CartUserName { get; set; }
-        [ForeignKey("CartUserName")]  //This attribute is optional bc EF should recognize Product obj specifi
-        public virtual ShoppingCart UserName { get; set; }
+        public string ShoppingCartUserName { get; set; }
+       
+        // [ForeignKey("CartUserName")]  //This attribute is optional bc EF should recognize Product obj specifi
+        //public ShoppingCart UserName { get; set; }
 
     }
 }

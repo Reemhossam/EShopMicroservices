@@ -32,7 +32,7 @@ namespace Basket.API.Migrations
 
                     b.HasKey("UserName");
 
-                    b.ToTable("ShoppingCarts", (string)null);
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("Basket.API.Models.ShoppingCartItem", b =>
@@ -42,10 +42,6 @@ namespace Basket.API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CartUserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Color")
                         .IsRequired()
@@ -64,22 +60,24 @@ namespace Basket.API.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<string>("ShoppingCartUserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CartUserName");
+                    b.HasIndex("ShoppingCartUserName");
 
-                    b.ToTable("ShoppingCartItems", (string)null);
+                    b.ToTable("ShoppingCartItems");
                 });
 
             modelBuilder.Entity("Basket.API.Models.ShoppingCartItem", b =>
                 {
-                    b.HasOne("Basket.API.Models.ShoppingCart", "UserName")
+                    b.HasOne("Basket.API.Models.ShoppingCart", null)
                         .WithMany("Items")
-                        .HasForeignKey("CartUserName")
+                        .HasForeignKey("ShoppingCartUserName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("UserName");
                 });
 
             modelBuilder.Entity("Basket.API.Models.ShoppingCart", b =>

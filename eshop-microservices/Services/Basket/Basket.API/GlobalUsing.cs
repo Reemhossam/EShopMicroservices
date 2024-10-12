@@ -11,3 +11,4 @@ global using Basket.API.Exceptions;
 global using BulidingBlocks.Behaviors;
 global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
+global using Basket.API.Dtos;

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Basket.API.Migrations
 {
     /// <inheritdoc />
-    public partial class addTablestoDb : Migration
+    public partial class createTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,23 +34,23 @@ namespace Basket.API.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CartUserName = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ShoppingCartUserName = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ShoppingCartItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ShoppingCartItems_ShoppingCarts_CartUserName",
-                        column: x => x.CartUserName,
+                        name: "FK_ShoppingCartItems_ShoppingCarts_ShoppingCartUserName",
+                        column: x => x.ShoppingCartUserName,
                         principalTable: "ShoppingCarts",
                         principalColumn: "UserName",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCartItems_CartUserName",
+                name: "IX_ShoppingCartItems_ShoppingCartUserName",
                 table: "ShoppingCartItems",
-                column: "CartUserName");
+                column: "ShoppingCartUserName");
         }
 
         /// <inheritdoc />

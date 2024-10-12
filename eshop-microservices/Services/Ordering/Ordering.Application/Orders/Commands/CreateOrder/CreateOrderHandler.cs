@@ -1,6 +1,4 @@
-﻿using BulidingBlocks.CQRS;
-using Mapster;
-namespace Ordering.Application.Orders.Commands.CreateOrder
+﻿namespace Ordering.Application.Orders.Commands.CreateOrder
 {
     public class CreateOrderHandler(IApplicationDbContext _dbContext) : ICommandHandler<CreateOrderCommand, CreateOrderResult>
     {

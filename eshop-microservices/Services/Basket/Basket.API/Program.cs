@@ -1,4 +1,5 @@
 using BulidingBlocks.Exceptions.Handler;
+using BulidingBlocks.Messaging.MassTransit;
 using Discount.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +26,10 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
 {
     options.Address= new Uri(builder.Configuration["GrpcSetting:DiscountUrl"]!);
 });
+
+//Async Communication services
+builder.Services.AddMessageBroker(builder.Configuration);
+
 //Cross Cutting services
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 

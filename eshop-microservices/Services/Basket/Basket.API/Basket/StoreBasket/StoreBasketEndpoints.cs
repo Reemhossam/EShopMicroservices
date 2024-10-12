@@ -1,4 +1,5 @@
 ﻿
+using Basket.API.Basket.GetBasket;
 using Basket.API.Models;
 
 namespace Basket.API.Basket.StoreBasket
